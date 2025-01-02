@@ -9,6 +9,11 @@ public class Auto {
     private double precio;
     private boolean vendido;
 
+    // Constructor vacío necesario para Firebase
+    public Auto() {
+    }
+
+    // Constructor con parámetros
     public Auto(String patente, String marca, String modelo, int ano, String color, double precio) {
         this.patente = patente;
         this.marca = marca;
@@ -16,15 +21,48 @@ public class Auto {
         this.ano = ano;
         this.color = color;
         this.precio = precio;
-        this.vendido = false;
+        this.vendido = false; // Inicialmente el auto no está vendido
     }
 
-    public void setVendido(boolean vendido) {
-        this.vendido = vendido;
+    // Getters y Setters
+    public String getPatente() {
+        return patente;
     }
 
-    public boolean isVendido() {
-        return vendido;
+    public void setPatente(String patente) {
+        this.patente = patente;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public double getPrecio() {
@@ -33,5 +71,13 @@ public class Auto {
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    public boolean isVendido() {
+        return vendido;
+    }
+
+    public void setVendido(boolean vendido) {
+        this.vendido = vendido;
     }
 }
