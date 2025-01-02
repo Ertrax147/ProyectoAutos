@@ -18,7 +18,9 @@ public abstract class Usuario {
             System.out.println("Credenciales incorrectas.");
         }
     }
-
+    public String getNombre() {
+        return nombre;  // Accede al nombre del usuario (Cliente)
+    }
     public void cerrarSesion() {
         System.out.println("Sesión cerrada.");
     }

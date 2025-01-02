@@ -18,10 +18,24 @@ public class Venta {
         historialVentas.add(this);
     }
 
+    // Métodos get para acceder a los atributos privados
+    public Auto getAuto() {
+        return auto;
+    }
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public double getMonto() {
+        return monto;
+    }
+
+    // Método estático para registrar una venta
     public static void registrarVenta(Cliente cliente, Auto auto, double monto) {
         historialVentas.add(new Venta(auto, cliente, "2024-11-14", monto));
     }
 
+    // Obtener historial de ventas
     public static List<Venta> getHistorialVentas() {
         return historialVentas;
     }
