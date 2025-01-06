@@ -16,7 +16,6 @@ public class FirestoreCRUD {
         return FirestoreClient.getFirestore();
     }
 
-    // Create or Update a Document
     public static void crearOActualizarDocumento(String nombreColeccion, String IdDocumento, Map<String, Object> data) {
         Firestore db = getFirestore();
         ApiFuture<WriteResult> future = db.collection(nombreColeccion).document(IdDocumento).set(data);
@@ -27,7 +26,6 @@ public class FirestoreCRUD {
         }
     }
 
-    // Read a Document
     public static void leerDocumento(String nombreColeccion, String IdDocumento) {
         Firestore db = getFirestore();
         DocumentReference docRef = db.collection(nombreColeccion).document(IdDocumento);
@@ -105,5 +103,57 @@ public class FirestoreCRUD {
         autoData.put("color", auto.getColor());
         autoData.put("precio", auto.getPrecio());
         return autoData;
+    }
+
+    public static List<Map<String, Object>> obtenerFavoritos() {
+        Firestore db = FirestoreClient.getFirestore();
+        List<Map<String, Object>> favoritos = new ArrayList<>();
+        ApiFuture<QuerySnapshot> future = db.collection("favoritos").get();
+        try {
+            List<QueryDocumentSnapshot> documents = future.get().getDocuments();
+            for (QueryDocumentSnapshot document : documents) {
+                favoritos.add(document.getData());
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return favoritos;
+    }
+
+    public static void agregarAFavoritos(String patente) {
+        Firestore db = FirestoreClient.getFirestore();
+        Map<String, Object> favorito = new HashMap<>();
+        favorito.put("patente", patente);
+        db.collection("favoritos").document(patente).set(favorito);
+    }
+
+    public static void eliminarDeFavoritos(String patente) {
+        Firestore db = FirestoreClient.getFirestore();
+        db.collection("favoritos").document(patente).delete();
+    }
+
+    public static void actualizarAuto(Auto auto) {
+        Firestore db = FirestoreClient.getFirestore();
+        Map<String, Object> autoData = new HashMap<>();
+        autoData.put("patente", auto.getPatente());
+        autoData.put("marca", auto.getMarca());
+        autoData.put("modelo", auto.getModelo());
+        autoData.put("ano", auto.getAno());
+        autoData.put("color", auto.getColor());
+        autoData.put("precio", auto.getPrecio());
+        autoData.put("vendido", auto.isVendido());
+
+        db.collection("autos").document(auto.getPatente()).set(autoData);
+    }
+
+    public static void registrarVenta(Venta venta) {
+        Firestore db = FirestoreClient.getFirestore();
+        Map<String, Object> ventaData = new HashMap<>();
+        ventaData.put("auto", venta.getAuto().getPatente());
+        ventaData.put("cliente", venta.getCliente().getEmail());
+        ventaData.put("fecha", venta.getFecha());
+        ventaData.put("monto", venta.getMonto());
+
+        db.collection("ventas").add(ventaData);
     }
 }
